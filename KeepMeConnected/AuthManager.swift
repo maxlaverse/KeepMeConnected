@@ -103,10 +103,10 @@ class AuthManager: NSObject {
     
     func authenticate(){
         // Check the required data are present for an authentication
-        if let portalUrl = DataManager.sharedData.getPortalURL(), let userEmail = DataManager.sharedData.getUserEmail(),let password = DataManager.sharedData.getUserPassword(){
+        if let portalUrl = DataManager.sharedData.getPortalURL(), let userName = DataManager.sharedData.getUserName(),let password = DataManager.sharedData.getUserPassword(), let userDomain = DataManager.sharedData.getUserDomain(){
             
             os_log("Will try to authenticate against the portal")
-            watchGuardClient.logon(portalUrl: portalUrl, userEmail: userEmail, userPassword: password) { response in
+            watchGuardClient.logon(portalUrl: portalUrl, userName: userName, userPassword: password,userDomain: userDomain) { response in
                 switch(response){
                 case .Success:
                     os_log("Authentication successful. Checking status")

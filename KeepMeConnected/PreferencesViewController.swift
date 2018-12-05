@@ -9,12 +9,13 @@ class PreferencesViewController: NSViewController, NSTextFieldDelegate{
     let watchGuardClient = WatchGuard()
     
     @IBOutlet weak var portalURL: NSTextField!
-    @IBOutlet weak var email: NSTextField!
+    @IBOutlet weak var userDomain: NSTextField!
+    @IBOutlet weak var userName: NSTextField!
     @IBOutlet weak var userPassword: NSSecureTextField!
     @IBOutlet weak var testResultImage: NSImageView!
     @IBOutlet weak var testSpinner: NSProgressIndicator!
     @IBOutlet weak var testFailureReason: NSTextFieldCell!
-    
+
     @objc dynamic var runAtLogin = DataManager.sharedData.getRunAtLogin(){
         didSet {
             DataManager.sharedData.setRunAtLogin(runAtLogin)
@@ -36,8 +37,9 @@ class PreferencesViewController: NSViewController, NSTextFieldDelegate{
         super.viewDidAppear()
         
         self.portalURL?.delegate = self
-        self.email?.delegate = self
+        self.userName?.delegate = self
         self.userPassword?.delegate = self
+        self.userDomain?.delegate = self
         
         loadValues()
         
@@ -54,12 +56,16 @@ class PreferencesViewController: NSViewController, NSTextFieldDelegate{
             self.portalURL?.stringValue = p.absoluteString
         }
         
-        if let p = DataManager.sharedData.getUserEmail(){
-            self.email?.stringValue = p
+        if let p = DataManager.sharedData.getUserName(){
+            self.userName?.stringValue = p
         }
         
         if let p = DataManager.sharedData.getUserPassword(){
             self.userPassword?.stringValue = p
+        }
+
+        if let p = DataManager.sharedData.getUserDomain(){
+            self.userDomain?.stringValue = p
         }
     }
     
@@ -72,8 +78,15 @@ class PreferencesViewController: NSViewController, NSTextFieldDelegate{
                     textField.textColor = NSColor.red
                 }
             }
-            if textField == self.email{
-                if DataManager.sharedData.setUserEmail(textField.stringValue){
+            if textField == self.userName{
+                if DataManager.sharedData.setUserName(textField.stringValue){
+                    textField.textColor = NSColor.black
+                }else{
+                    textField.textColor = NSColor.red
+                }
+            }
+            if textField == self.userDomain{
+                if DataManager.sharedData.setUserDomain(textField.stringValue){
                     textField.textColor = NSColor.black
                 }else{
                     textField.textColor = NSColor.red
@@ -138,13 +151,13 @@ class PreferencesViewController: NSViewController, NSTextFieldDelegate{
     
     func testLogon(){
         // Check if the firewall is just accepting any credentials because the way the user is connected (e.g already authenticated through VPN)
-        watchGuardClient.logon(portalUrl: DataManager.sharedData.getPortalURL()!, userEmail: "crap@crap", userPassword: "crap") { response in
+        watchGuardClient.logon(portalUrl: DataManager.sharedData.getPortalURL()!, userName: "crap@crap", userPassword: DataManager.sharedData.getUserPassword()!, userDomain: DataManager.sharedData.getUserDomain()!) { response in
             DispatchQueue.main.async {
                 switch(response){
                 case .Success:
                     self.displayTestResult(image: ResultImage.Failure, title: "The portal is blindly accepting any credentials.")
                 case .Error(_), .Failed(_):
-                    self.watchGuardClient.logon(portalUrl: DataManager.sharedData.getPortalURL()!, userEmail: DataManager.sharedData.getUserEmail()!, userPassword: DataManager.sharedData.getUserPassword()!) { response in
+                    self.watchGuardClient.logon(portalUrl: DataManager.sharedData.getPortalURL()!, userName: DataManager.sharedData.getUserName()!, userPassword: DataManager.sharedData.getUserPassword()!,userDomain: DataManager.sharedData.getUserDomain()!) { response in
                         DispatchQueue.main.async {
                             switch(response){
                             case .Success:

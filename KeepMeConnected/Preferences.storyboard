@@ -155,20 +155,20 @@
             <objects>
                 <viewController title="User" id="EgL-bS-oFV" customClass="PreferencesViewController" customModule="KeepMeConnected" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="B5o-WI-wOZ">
-                        <rect key="frame" x="0.0" y="0.0" width="418" height="164"/>
+                        <rect key="frame" x="0.0" y="0.0" width="418" height="217"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h0a-NN-HdO">
-                                <rect key="frame" x="18" y="127" width="41" height="17"/>
+                                <rect key="frame" x="18" y="182" width="66" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Email:" id="VTF-MX-adL">
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Username" id="VTF-MX-adL">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField identifier="Email" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hPs-85-taz">
-                                <rect key="frame" x="20" y="97" width="265" height="22"/>
+                                <rect key="frame" x="20" y="153" width="265" height="22"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" identifier="Email" placeholderString="firstname.lastname@company.com" drawsBackground="YES" id="fVd-Ww-qZa">
                                     <font key="font" metaFont="system"/>
@@ -177,7 +177,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P9a-1k-W7L">
-                                <rect key="frame" x="18" y="63" width="66" height="17"/>
+                                <rect key="frame" x="19" y="121" width="66" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Password:" id="k6T-jt-zbZ">
                                     <font key="font" metaFont="system"/>
@@ -186,7 +186,7 @@
                                 </textFieldCell>
                             </textField>
                             <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SWT-vg-z02">
-                                <rect key="frame" x="20" y="36" width="265" height="22"/>
+                                <rect key="frame" x="21" y="93" width="265" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="Kcd-Ll-Oyd">
                                     <font key="font" metaFont="system"/>
@@ -198,25 +198,16 @@
                                 </secureTextFieldCell>
                             </secureTextField>
                             <progressIndicator hidden="YES" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="eWn-rp-QXC">
-                                <rect key="frame" x="291" y="39" width="16" height="16"/>
+                                <rect key="frame" x="293" y="96" width="16" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </progressIndicator>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mFC-t1-ehv">
-                                <rect key="frame" x="291" y="39" width="16" height="16"/>
+                                <rect key="frame" x="293" y="96" width="16" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="iaO-0K-51I"/>
                             </imageView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v6h-mu-TcX">
-                                <rect key="frame" x="20" y="11" width="380" height="17"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" id="1as-34-KAh">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d0v-fy-anO">
-                                <rect key="frame" x="316" y="29" width="88" height="32"/>
+                                <rect key="frame" x="315" y="87" width="88" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Test" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OtU-DZ-ZZz">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -226,19 +217,47 @@
                                     </connections>
                                 </buttonCell>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mZ4-jJ-UrG">
+                                <rect key="frame" x="19" y="62" width="54" height="17"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Domain:" id="cgZ-Bf-4rC">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lwG-Sm-sv7">
+                                <rect key="frame" x="21" y="34" width="127" height="22"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="5GO-Rm-psc">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v6h-mu-TcX">
+                                <rect key="frame" x="19" y="8" width="380" height="17"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" id="1as-34-KAh">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="email" destination="hPs-85-taz" id="VeV-32-4nB"/>
                         <outlet property="testFailureReason" destination="1as-34-KAh" id="IdC-w4-5or"/>
                         <outlet property="testResultImage" destination="mFC-t1-ehv" id="SHz-sD-O55"/>
                         <outlet property="testSpinner" destination="eWn-rp-QXC" id="Pby-Q8-so1"/>
+                        <outlet property="userDomain" destination="lwG-Sm-sv7" id="0vx-4f-Bwd"/>
+                        <outlet property="userName" destination="hPs-85-taz" id="VeV-32-4nB"/>
                         <outlet property="userPassword" destination="SWT-vg-z02" id="hXj-Fc-ich"/>
                     </connections>
                 </viewController>
                 <customObject id="y7J-Mm-PlG" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="501" y="333"/>
+            <point key="canvasLocation" x="501" y="359.5"/>
         </scene>
         <!--Advanced-->
         <scene sceneID="zw1-3z-qMZ">
@@ -265,7 +284,7 @@
                     </view>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="501" y="546"/>
+            <point key="canvasLocation" x="501" y="667"/>
         </scene>
     </scenes>
     <resources>

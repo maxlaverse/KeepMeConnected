@@ -1,9 +1,10 @@
 import Cocoa
 import ServiceManagement
-import os.log
 
 let KEY_AUTO_START = "KMCAutoStart"
 let KEY_EMAIL = "KMCEmail"
+let KEY_USERNAME = "KMCUsername"
+let KEY_DOMAIN = "KMCDomain"
 let KEY_PORTAL_URL = "KMCPortalURL"
 let KEY_SHOW_NOTIFICATIONS = "KMCShowNotifications"
 let KEY_POLLING_RATE = "KMCPollingRate"
@@ -64,15 +65,41 @@ class DataManager : NSObject {
         return true
     }
 
-    func getUserEmail() -> String?{
-        return UserDefaults.standard.string(forKey: KEY_EMAIL)
+    func getUserName() -> String?{
+        if UserDefaults.standard.string(forKey: KEY_USERNAME) == nil{
+            if let email = UserDefaults.standard.string(forKey: KEY_EMAIL){
+                let username = email.components(separatedBy: "@")[0]
+                setUserName(username)
+                return username
+            }
+        }
+        return UserDefaults.standard.string(forKey: KEY_USERNAME)
     }
 
-    func setUserEmail(_ email : String) -> Bool {
-        if !isValidUserEmail(email){
+    func setUserName(_ username : String) -> Bool {
+        if !isValidUserName(username){
             return false
         }
-        UserDefaults.standard.set(email, forKey: KEY_EMAIL)
+        UserDefaults.standard.set(username, forKey: KEY_USERNAME)
+        return true
+    }
+
+    func getUserDomain() -> String?{
+        if UserDefaults.standard.string(forKey: KEY_DOMAIN) == nil{
+            if let email = UserDefaults.standard.string(forKey: KEY_EMAIL){
+                let domain = email.components(separatedBy: "@")[1]
+                setUserDomain(domain)
+                return domain
+            }
+        }
+        return UserDefaults.standard.string(forKey: KEY_DOMAIN)
+    }
+
+    func setUserDomain(_ domain : String) -> Bool {
+        if !isValidUserDomain(domain){
+            return false
+        }
+        UserDefaults.standard.set(domain, forKey: KEY_DOMAIN)
         return true
     }
 
@@ -93,10 +120,16 @@ class DataManager : NSObject {
         UserDefaults.standard.set(showNotifications, forKey: KEY_SHOW_NOTIFICATIONS)
     }
 
-    func isValidUserEmail(_ textStr:String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluate(with: textStr)
+    func isValidUserName(_ textStr:String) -> Bool {
+        let userNameRegexp = "[A-Z0-9a-z._%+-]+"
+        let userNameTest = NSPredicate(format:"SELF MATCHES %@", userNameRegexp)
+        return userNameTest.evaluate(with: textStr)
+    }
+
+    func isValidUserDomain(_ textStr:String) -> Bool {
+        let userDomainRegexp = "[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let userDomainTest = NSPredicate(format:"SELF MATCHES %@", userDomainRegexp)
+        return userDomainTest.evaluate(with: textStr)
     }
 
     func isValidPortalURL(_ textStr:String) -> Bool {

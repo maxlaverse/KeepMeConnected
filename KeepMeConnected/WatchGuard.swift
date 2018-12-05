@@ -54,18 +54,14 @@ class WatchGuard: NSObject {
         task.resume()
     }
     
-    func logon(portalUrl: URL,userEmail: String,userPassword: String, handler: @escaping (_: WatchGuardLoginResponse) -> Void){
-        // Check the required data are present
-        let username = WatchGuard.getUsername(userEmail)
-        let domain = WatchGuard.getDomain(userEmail)
-        
+    func logon(portalUrl: URL,userName: String,userPassword: String,userDomain: String, handler: @escaping (_: WatchGuardLoginResponse) -> Void){
         // Prepare request
         var request = URLRequest(url: URL(string: "\(portalUrl)wgcgi.cgi")!)
         request.timeoutInterval = 3
         request.httpMethod = "POST"
         
         // Body
-        request.httpBody = "action=fw_logon&fw_domain=\(domain)&fw_logon_type=logon&fw_username=\(username)&fw_password=\(userPassword)&lang=en-US&submit=Login".data(using: String.Encoding.ascii, allowLossyConversion: false)
+        request.httpBody = "action=fw_logon&fw_domain=\(userDomain)&fw_logon_type=logon&fw_username=\(userName)&fw_password=\(userPassword)&lang=en-US&submit=Login".data(using: String.Encoding.ascii, allowLossyConversion: false)
         
         // Headers
         request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -141,15 +137,7 @@ class WatchGuard: NSObject {
         }
         task.resume()
     }
-    
-    class func getUsername(_ email:String) -> String{
-        return email.components(separatedBy: "@")[0]
-    }
-    
-    class func getDomain(_ email:String) -> String{
-        return email.components(separatedBy: "@")[1]
-    }
-    
+        
     class func getErrorCodeStr(_ errcode:String) -> String{
         switch(errcode){
         case "501":

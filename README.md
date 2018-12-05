@@ -1,10 +1,10 @@
 ## KeepMeConnected
 
-Always stay connected on your Watchguard Portal.
+Always stay connected on the Watchguard Authentication Portal of your company.
 
-This application polls your status on the Watchguard Portal periodically and re-authenticates you if you're logged out.
+KeepMeConnected polls your status on the Watchguard Authentication Portal periodically and re-authenticates if you're logged out.
 It also detects when your connectivity changes to avoid being unauthenticated for too long when switching from Ethernet to Wifi.
-Your password is stored in the MacOS Keychain.
+Your password is stored in the MacOS Keychain and the icon in the status bar allows you to keep an eye on your authentication status.
 
 ## Installation
 Compile the application yourself

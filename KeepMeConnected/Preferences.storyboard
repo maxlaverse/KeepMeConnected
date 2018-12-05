@@ -140,6 +140,7 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="buttonTestPortalURL" destination="4Cw-l2-NWR" id="3VP-rl-hXk"/>
                         <outlet property="portalURL" destination="V5g-Mh-dGt" id="Pes-Q4-aOb"/>
                         <outlet property="testFailureReason" destination="x3I-eS-3aX" id="xkL-QI-KIc"/>
                         <outlet property="testResultImage" destination="TYD-RZ-mRX" id="BkM-d2-aZA"/>
@@ -247,6 +248,7 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="buttonTestCredentials" destination="d0v-fy-anO" id="ZZw-GB-o2Q"/>
                         <outlet property="testFailureReason" destination="1as-34-KAh" id="IdC-w4-5or"/>
                         <outlet property="testResultImage" destination="mFC-t1-ehv" id="SHz-sD-O55"/>
                         <outlet property="testSpinner" destination="eWn-rp-QXC" id="Pby-Q8-so1"/>

@@ -15,6 +15,8 @@ class PreferencesViewController: NSViewController, NSTextFieldDelegate{
     @IBOutlet weak var testResultImage: NSImageView!
     @IBOutlet weak var testSpinner: NSProgressIndicator!
     @IBOutlet weak var testFailureReason: NSTextFieldCell!
+    @IBOutlet weak var buttonTestPortalURL: NSButton!
+    @IBOutlet weak var buttonTestCredentials: NSButton!
 
     @objc dynamic var runAtLogin = DataManager.sharedData.getRunAtLogin(){
         didSet {
@@ -67,6 +69,21 @@ class PreferencesViewController: NSViewController, NSTextFieldDelegate{
         if let p = DataManager.sharedData.getUserDomain(){
             self.userDomain?.stringValue = p
         }
+        updateButtonState()
+    }
+
+    func updateButtonState(){
+        if let _ = DataManager.sharedData.getPortalURL(){
+            self.buttonTestPortalURL?.isEnabled = true
+        }else{
+            self.buttonTestPortalURL?.isEnabled = false
+        }
+
+        if let _ = DataManager.sharedData.getUserName(),let _ = DataManager.sharedData.getUserPassword(), let _ = DataManager.sharedData.getUserDomain(){
+            self.buttonTestCredentials?.isEnabled = true
+        }else{
+            self.buttonTestCredentials?.isEnabled = false
+        }
     }
     
     func controlTextDidChange(_ notification: Notification) {
@@ -95,6 +112,7 @@ class PreferencesViewController: NSViewController, NSTextFieldDelegate{
             if textField == self.userPassword{
                 DataManager.sharedData.setUserPassword(textField.stringValue)
             }
+            updateButtonState()
         }
     }
     
@@ -114,13 +132,13 @@ class PreferencesViewController: NSViewController, NSTextFieldDelegate{
     
     @IBAction func buttonTestCredentials(_ sender: Any) {
         displayTestStart(sender)
-        
+
         // Check if we are already connected
         self.watchGuardClient.checkStatus(portalUrl: DataManager.sharedData.getPortalURL()!) { response in
             DispatchQueue.main.async {
                 switch(response){
                 case .Connected:
-                    
+
                     // We are already connected, first logout
                     let answer = self.dialogContinue(question: "You are already authenticated", text: "To test your credentials, we will need to log you out first.")
                     if answer {
@@ -145,7 +163,6 @@ class PreferencesViewController: NSViewController, NSTextFieldDelegate{
                     self.displayTestResult(image: ResultImage.Failure, title: reason)
                 }
             }
-            
         }
     }
     

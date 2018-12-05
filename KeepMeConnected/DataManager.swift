@@ -28,7 +28,7 @@ class DataManager : NSObject {
     func reset(){
         UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
         UserDefaults.standard.synchronize()
-        print(Array(UserDefaults.standard.dictionaryRepresentation().keys).count)
+        KeychainService.deleteString(forKey: KEY_PASSWORD)
     }
 
     func getPollingInterval() -> Double {

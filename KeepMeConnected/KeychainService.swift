@@ -50,6 +50,18 @@ class KeychainService : NSObject {
             }
         }
     }
+
+    class func deleteString(forKey : String) {
+        let query = keychainQueryDictionary(key: forKey)
+        let status: OSStatus = SecItemDelete(query as CFDictionary)
+        if status == errSecSuccess {
+            os_log("Successfully removed password in Keychain")
+        }else{
+            if let err = SecCopyErrorMessageString(status, nil) {
+                os_log("Error while removing password in Keychain: %d %s",status,err as String)
+            }
+        }
+    }
     
     class func keychainQueryDictionary(key :String) -> [String:Any] {
         var queryDictionary: [String:Any] = [(kSecClass as String):kSecClassGenericPassword]

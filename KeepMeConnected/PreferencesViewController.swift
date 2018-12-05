@@ -62,8 +62,8 @@ class PreferencesViewController: NSViewController, NSTextFieldDelegate{
             self.userName?.stringValue = p
         }
         
-        if let p = DataManager.sharedData.getUserPassword(){
-            self.userPassword?.stringValue = p
+        if let _ = DataManager.sharedData.getUserPassword(){
+            self.userPassword?.placeholderString = "stored in KeyChain"
         }
 
         if let p = DataManager.sharedData.getUserDomain(){

@@ -60,7 +60,7 @@ class MenuController : NSObject {
         let msg = NSAlert()
         msg.addButton(withTitle:"OK")
         msg.messageText = "About"
-        msg.informativeText = "Icons made by Freepik and Maxim Basinski from www.flaticon.com\n\nVersion \(appVersion!)"
+        msg.informativeText = "Icons made by Freepik and Maxim Basinski from www.flaticon.com\n\nVersion \(appVersion!)\nDeveloped by maxlaverse"
         msg.alertStyle = NSAlert.Style.informational
         msg.runModal()
     }

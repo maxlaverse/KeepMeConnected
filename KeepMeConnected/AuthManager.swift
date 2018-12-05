@@ -46,7 +46,7 @@ class AuthManager: NSObject {
     
     func manualCheckTrigger(notification:Notification){
         os_log("A manual check trigger was received")
-        timer!.fire()
+        timer?.fire()
     }
     
     func watchConnectivityChanges(){

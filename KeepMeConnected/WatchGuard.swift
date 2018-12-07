@@ -80,8 +80,7 @@ class WatchGuard: NSObject {
                         if let errcode = URLComponents(string: httpResponse.url!.absoluteString)?.queryItems?.filter({$0.name == "errcode"}).first?.value {
                             handler(WatchGuardLoginResponse.Failed(WatchGuard.getErrorCodeStr(errcode)))
                         }else{
-                            let dataString = String(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!)
-                            handler(WatchGuardLoginResponse.Error(String(format: "Missing errcode '%@': %@",httpResponse.url!.absoluteString, dataString)))
+                            handler(WatchGuardLoginResponse.Error(String(format: "Missing errcode in redirection to '%@'",httpResponse.url!.absoluteString)))
                         }
                     }
                 }else{

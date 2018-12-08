@@ -1,5 +1,6 @@
 import Cocoa
 import ServiceManagement
+import os.log
 
 let KEY_AUTO_START = "KMCAutoStart"
 let KEY_EMAIL = "KMCEmail"
@@ -69,7 +70,9 @@ class DataManager : NSObject {
         if UserDefaults.standard.string(forKey: KEY_USERNAME) == nil{
             if let email = UserDefaults.standard.string(forKey: KEY_EMAIL){
                 let username = email.components(separatedBy: "@")[0]
-                setUserName(username)
+                if !setUserName(username){
+                    os_log("Could not setUserName")
+                }
                 return username
             }
         }
@@ -88,7 +91,9 @@ class DataManager : NSObject {
         if UserDefaults.standard.string(forKey: KEY_DOMAIN) == nil{
             if let email = UserDefaults.standard.string(forKey: KEY_EMAIL){
                 let domain = email.components(separatedBy: "@")[1]
-                setUserDomain(domain)
+                if !setUserDomain(domain){
+                    os_log("Could not setUserDomain")
+                }
                 return domain
             }
         }
@@ -109,7 +114,11 @@ class DataManager : NSObject {
 
     func setRunAtLogin(_ runAtLogin : Bool) {
         UserDefaults.standard.set(runAtLogin, forKey: KEY_AUTO_START)
-        SMLoginItemSetEnabled(Bundle.main.bundleIdentifier! as CFString, runAtLogin)
+        if !SMLoginItemSetEnabled("\(Bundle.main.bundleIdentifier!)Launcher" as CFString, runAtLogin){
+            os_log("Failed to register application for auto-startup")
+        }else{
+            os_log("Successfully registered application for auto-startup")
+        }
     }
 
     func shouldShowNotifications() -> Bool{

@@ -100,8 +100,8 @@ extension MenuController : AuthManagerDelegate {
                 self.updateStatus(message: String(format: "Authentication failed (%@)",reason),image:StatusImage.NotConnected)
             case AuthManagerState.IncompleteConfiguration:
                 self.updateStatus(message: "Incomplete configuration",image:StatusImage.NotConnected)
-            case AuthManagerState.Uninitialized:
-                self.updateStatus(message: "Waiting for the first check",image:StatusImage.NotConnected)
+            case AuthManagerState.Unknown(let reason):
+                self.updateStatus(message: String(format: "Unknown (%@)",reason),image:StatusImage.NotConnected)
             case AuthManagerState.Error(let reason):
                 self.updateStatus(message: String(format: "Error (%@)",reason),image:StatusImage.NotConnected)
             }

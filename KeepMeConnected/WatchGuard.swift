@@ -43,8 +43,7 @@ class WatchGuard: NSObject {
                     }else if httpResponse.url?.absoluteString.range(of:"logon.shtml") != nil {
                         handler(WatchGuardCheckStatusResponse.NotConnected)
                     }else{
-                        let dataString = String(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!)
-                        handler(WatchGuardCheckStatusResponse.Error(String(format: "Unknown location '%s': %s",httpResponse.url!.absoluteString, dataString)))
+                        handler(WatchGuardCheckStatusResponse.Error(String(format: "Unknown location '%@' (%d)",httpResponse.url!.absoluteString, httpResponse.statusCode)))
                     }
                 }else{
                     handler(WatchGuardCheckStatusResponse.Error("No HTTPURLResponse was returned"))
@@ -126,8 +125,7 @@ class WatchGuard: NSObject {
                             handler(WatchGuardLogoutResponse.Error(String(format: "Missing errcode '%@': %@",httpResponse.url!.absoluteString, dataString)))
                         }
                     }else{
-                        let dataString = String(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!)
-                        handler(WatchGuardLogoutResponse.Error(String(format: "Unknown location '%@': %@",httpResponse.url!.absoluteString, dataString)))
+                        handler(WatchGuardLogoutResponse.Error(String(format: "Unknown location '%@' (%d)",httpResponse.url!.absoluteString, httpResponse.statusCode)))
                     }
                 }else{
                     handler(WatchGuardLogoutResponse.Error("No HTTPURLResponse was returned"))

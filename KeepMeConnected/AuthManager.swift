@@ -8,7 +8,7 @@ enum AuthManagerState : Equatable{
     case Error(_ reason : String)
     case IncompleteConfiguration
     case NotAuthenticated
-    case Uninitialized
+    case Unknown(_ reason : String)
 }
 
 protocol AuthManagerDelegate {
@@ -19,66 +19,70 @@ protocol AuthManagerDelegate {
 // and sends updates to its delegate
 class AuthManager: NSObject {
     var delegate : AuthManagerDelegate?
-    let watchGuardClient = WatchGuard()
-    
+
+    private let connectivityService = ConnectivityService()
+    private let watchGuardClient = WatchGuard()
+    private var newSettingsObserver: Any? = nil
     private var timer : Timer?
-    
-    private var state = AuthManagerState.Uninitialized {
+
+    private var state = AuthManagerState.Unknown("initializing") {
         didSet {
             if oldValue != state{
                 self.delegate?.authStateChanged(state)
             }
         }
     }
-    
+
+    override init(){
+        super.init()
+        connectivityService.delegate = self
+    }
+
     func start() {
-        // Starts a timer that will periodically poll the status on the portal
-        if (timer != nil) {return}
-        timer = Timer.scheduledTimer(timeInterval: DataManager.sharedData.getPollingInterval(), target: self, selector: #selector(AuthManager.checkStatus), userInfo: nil, repeats: true)
-        timer!.fire()
-        
-        // Watch for MacOS network connectivity change events
-        watchConnectivityChanges()
-        
-        // Listen for another part of the application that might ask to update the status
-        NotificationCenter.default.addObserver(forName:Notification.Name("checkStatusTrigger"), object:nil, queue:nil, using:manualCheckTrigger)
-    }
-    
-    func manualCheckTrigger(notification:Notification){
-        os_log("A manual check trigger was received")
-        timer?.fire()
-    }
-    
-    func watchConnectivityChanges(){
-        let callback: SCDynamicStoreCallBack = { (store, flags, info) in
-            os_log("Connectivity changed")
-            if let info = info {
-                let mySelf = Unmanaged<AuthManager>.fromOpaque(info).takeUnretainedValue()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                    mySelf.checkStatus()
-                }
-            }
+        if let portalUrl = DataManager.sharedData.getPortalURL(){
+            // Watch for MacOS network connectivity change events
+            connectivityService.watch(portalUrl.host!)
         }
-        var dynamicContext = SCDynamicStoreContext(version: 0, info: nil, retain: nil, release: nil, copyDescription: nil)
-        dynamicContext.info = UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque())
-        
-        let dcAddress = withUnsafeMutablePointer(to: &dynamicContext, {UnsafeMutablePointer<SCDynamicStoreContext>($0)})
-        let store = SCDynamicStoreCreate(kCFAllocatorDefault, Bundle.main.bundleIdentifier! as CFString, callback, dcAddress)
-        SCDynamicStoreSetNotificationKeys(store!, ["State:/Network/Global/IPv4"] as CFArray, nil)
-        
-        let loop = SCDynamicStoreCreateRunLoopSource(kCFAllocatorDefault, store!, 0)
-        CFRunLoopAddSource(CFRunLoopGetCurrent(), loop, CFRunLoopMode.defaultMode)
-        CFRunLoopRun()
+
+        // Listen for configuration changes
+        newSettingsObserver = NotificationCenter.default.addObserver(forName:Notification.Name("KeepMeConnected.NewSettings"), object:nil, queue:nil, using:applyNewSettings)
     }
-    
+
     func stop() {
+        if let settingsObserver = newSettingsObserver{
+            NotificationCenter.default.removeObserver(settingsObserver)
+            newSettingsObserver = nil
+        }
+
+        stopPolling()
+        connectivityService.stopWatching()
+    }
+
+    private func pollPeriodically(){
+        if (timer == nil) {
+            timer = Timer.scheduledTimer(timeInterval: DataManager.sharedData.getPollingInterval(), target: self, selector: #selector(AuthManager.checkStatus), userInfo: nil, repeats: true)
+        }
+
+        timer!.fire()
+    }
+
+    private func stopPolling(){
         if let timer = timer {
             timer.invalidate()
             self.timer = nil
         }
     }
     
-    @objc func checkStatus() {
+    private func applyNewSettings(notification:Notification){
+        os_log("Applying new settings")
+        if let portalUrl = DataManager.sharedData.getPortalURL(){
+            DispatchQueue.main.async {
+                self.connectivityService.watch(portalUrl.host!)
+            }
+        }
+    }
+    
+    @objc private func checkStatus() {
         // Check the required data are present for a status check
         if let portalUrl = DataManager.sharedData.getPortalURL(){
             os_log("Will try to check the status against the portal")
@@ -101,7 +105,7 @@ class AuthManager: NSObject {
         }
     }
     
-    func authenticate(){
+   private func authenticate(){
         // Check the required data are present for an authentication
         if let portalUrl = DataManager.sharedData.getPortalURL(), let userName = DataManager.sharedData.getUserName(),let password = DataManager.sharedData.getUserPassword(), let userDomain = DataManager.sharedData.getUserDomain(){
             
@@ -121,6 +125,22 @@ class AuthManager: NSObject {
             }
         }else{
             self.state = AuthManagerState.IncompleteConfiguration
+        }
+    }
+}
+
+extension AuthManager : ConnectivityServiceDelegate {
+    func connectivityChanged(_ reachability: ConnectivityChanged){
+        DispatchQueue.main.async {
+            switch reachability {
+            case .Reachable:
+                self.pollPeriodically()
+            case .ReachableWithNewAddress:
+                self.pollPeriodically()
+            case .Unreachable:
+                self.stopPolling()
+                self.state = AuthManagerState.Unknown("Portal is unreachable")
+            }
         }
     }
 }

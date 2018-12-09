@@ -15,6 +15,7 @@
 		B335985121AAC0E7001BC24F /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B335985021AAC0E7001BC24F /* Preferences.storyboard */; };
 		B335985321AAC443001BC24F /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B335985221AAC443001BC24F /* PreferencesViewController.swift */; };
 		B335985521AAC557001BC24F /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B335985421AAC557001BC24F /* PreferencesWindowController.swift */; };
+		B35EB06A21BD312200E2CA61 /* ConnectivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35EB06921BD312200E2CA61 /* ConnectivityService.swift */; };
 		B379766421AFF825000C1224 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B379766321AFF825000C1224 /* KeychainService.swift */; };
 		B3BC3AED21A61574001DD130 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BC3AEC21A61574001DD130 /* AuthManager.swift */; };
 		B3BC3AEF21A6175F001DD130 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BC3AEE21A6175F001DD130 /* MenuController.swift */; };
@@ -33,6 +34,7 @@
 		B335985221AAC443001BC24F /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		B335985421AAC557001BC24F /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		B350902C21B7000D00C7EE39 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		B35EB06921BD312200E2CA61 /* ConnectivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityService.swift; sourceTree = "<group>"; };
 		B379766321AFF825000C1224 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		B3BC3AEC21A61574001DD130 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		B3BC3AEE21A6175F001DD130 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				B3BC3AEE21A6175F001DD130 /* MenuController.swift */,
 				B317235221A604EF00D6F1CA /* AppDelegate.swift */,
 				B3BC3AEC21A61574001DD130 /* AuthManager.swift */,
+				B35EB06921BD312200E2CA61 /* ConnectivityService.swift */,
 				B317235621A604F200D6F1CA /* Assets.xcassets */,
 				B317235821A604F200D6F1CA /* Main.storyboard */,
 				B317235B21A604F200D6F1CA /* Info.plist */,
@@ -162,6 +165,7 @@
 				B3BC3AED21A61574001DD130 /* AuthManager.swift in Sources */,
 				B335985521AAC557001BC24F /* PreferencesWindowController.swift in Sources */,
 				B379766421AFF825000C1224 /* KeychainService.swift in Sources */,
+				B35EB06A21BD312200E2CA61 /* ConnectivityService.swift in Sources */,
 				B32142D021B2ED6100971F95 /* WatchGuard.swift in Sources */,
 				B317235321A604EF00D6F1CA /* AppDelegate.swift in Sources */,
 				B335985321AAC443001BC24F /* PreferencesViewController.swift in Sources */,

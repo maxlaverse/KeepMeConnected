@@ -7,7 +7,8 @@ enum ResultImage : NSImage.Name {
 
 class PreferencesViewController: NSViewController, NSTextFieldDelegate{
     let watchGuardClient = WatchGuard()
-    
+    private var didSettingsChanged = false
+
     @IBOutlet weak var portalURL: NSTextField!
     @IBOutlet weak var userDomain: NSTextField!
     @IBOutlet weak var userName: NSTextField!
@@ -49,7 +50,10 @@ class PreferencesViewController: NSViewController, NSTextFieldDelegate{
     }
     
     override func viewWillDisappear(){
-        NotificationCenter.default.post(name: Notification.Name("checkStatusTrigger"), object: nil)
+        if didSettingsChanged{
+            NotificationCenter.default.post(name: Notification.Name("KeepMeConnected.NewSettings"), object: nil)
+        }
+        didSettingsChanged = false
     }
     
     
@@ -88,6 +92,7 @@ class PreferencesViewController: NSViewController, NSTextFieldDelegate{
     
     func controlTextDidChange(_ notification: Notification) {
         if let textField = notification.object as? NSTextField {
+            didSettingsChanged = true
             if textField == self.portalURL{
                 if DataManager.sharedData.setPortalURL(textField.stringValue){
                     textField.textColor = NSColor.textColor

@@ -90,14 +90,14 @@ class PreferencesViewController: NSViewController, NSTextFieldDelegate{
         if let textField = notification.object as? NSTextField {
             if textField == self.portalURL{
                 if DataManager.sharedData.setPortalURL(textField.stringValue){
-                    textField.textColor = NSColor.black
+                    textField.textColor = NSColor.textColor
                 }else{
                     textField.textColor = NSColor.red
                 }
             }
             if textField == self.userName{
                 if DataManager.sharedData.setUserName(textField.stringValue){
-                    textField.textColor = NSColor.black
+                    textField.textColor = NSColor.textColor
                 }else{
                     textField.textColor = NSColor.red
                 }

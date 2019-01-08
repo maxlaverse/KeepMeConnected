@@ -2,7 +2,6 @@ import Cocoa
 import ServiceManagement
 import os.log
 
-let KEY_EMAIL = "KMCEmail"
 let KEY_USERNAME = "KMCUsername"
 let KEY_DOMAIN = "KMCDomain"
 let KEY_PORTAL_URL = "KMCPortalURL"
@@ -60,15 +59,6 @@ class DataManager : NSObject {
     }
 
     func getUserName() -> String?{
-        if UserDefaults.standard.string(forKey: KEY_USERNAME) == nil{
-            if let email = UserDefaults.standard.string(forKey: KEY_EMAIL){
-                let username = email.components(separatedBy: "@")[0]
-                if !setUserName(username){
-                    os_log("Could not setUserName")
-                }
-                return username
-            }
-        }
         return UserDefaults.standard.string(forKey: KEY_USERNAME)
     }
 
@@ -81,15 +71,6 @@ class DataManager : NSObject {
     }
 
     func getUserDomain() -> String?{
-        if UserDefaults.standard.string(forKey: KEY_DOMAIN) == nil{
-            if let email = UserDefaults.standard.string(forKey: KEY_EMAIL){
-                let domain = email.components(separatedBy: "@")[1]
-                if !setUserDomain(domain){
-                    os_log("Could not setUserDomain")
-                }
-                return domain
-            }
-        }
         return UserDefaults.standard.string(forKey: KEY_DOMAIN)
     }
 

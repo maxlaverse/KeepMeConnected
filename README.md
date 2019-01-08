@@ -14,6 +14,10 @@ Or:
 * move it into your application folder, right click on the icon and then click on `Open`
 * acknowledge the security warning displayed because the application is distributed outside the AppStore
 
+## Starting the application automatically
+Please follow the [instruction from Apple](https://support.apple.com/kb/PH25590?locale=en_GB) to have `KeepMeConnected` started
+automatically when you open your session.
+
 ## Debugging
 Use the `Console` (`Applications > Utilities > Console`) and filter by process (`KeepMeConnected`) to get more information about
 what the application is doing.

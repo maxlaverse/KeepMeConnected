@@ -19,12 +19,6 @@ class PreferencesViewController: NSViewController, NSTextFieldDelegate{
     @IBOutlet weak var buttonTestPortalURL: NSButton!
     @IBOutlet weak var buttonTestCredentials: NSButton!
 
-    @objc dynamic var runAtLogin = DataManager.sharedData.getRunAtLogin(){
-        didSet {
-            DataManager.sharedData.setRunAtLogin(runAtLogin)
-        }
-    }
-    
     @objc dynamic var showNotifications = DataManager.sharedData.shouldShowNotifications(){
         didSet {
             DataManager.sharedData.setShowNotifications(showNotifications)

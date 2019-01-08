@@ -62,7 +62,7 @@
             <objects>
                 <viewController title="Info" id="TGz-Qe-OHw" customClass="PreferencesViewController" customModule="KeepMeConnected" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="awp-A5-V1j">
-                        <rect key="frame" x="0.0" y="0.0" width="418" height="194"/>
+                        <rect key="frame" x="0.0" y="0.0" width="418" height="147"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bah-Ox-XAO">
@@ -77,7 +77,7 @@
                                 </connections>
                             </button>
                             <textField identifier="PortalURL" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V5g-Mh-dGt">
-                                <rect key="frame" x="20" y="130" width="281" height="22"/>
+                                <rect key="frame" x="20" y="81" width="281" height="22"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="https://auth.company.com:4100" drawsBackground="YES" id="DEa-jZ-V7O">
                                     <font key="font" metaFont="system"/>
@@ -86,27 +86,11 @@
                                 </textFieldCell>
                             </textField>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="kbU-mI-07G">
-                                <rect key="frame" x="20" y="94" width="378" height="5"/>
+                                <rect key="frame" x="20" y="53" width="378" height="5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </box>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vJ2-oJ-OCy">
-                                <rect key="frame" x="18" y="51" width="94" height="18"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Run at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="9h3-D9-bpa">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <binding destination="TGz-Qe-OHw" name="value" keyPath="self.runAtLogin" id="ptP-2i-DFz"/>
-                                </connections>
-                            </button>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TYD-RZ-mRX">
-                                <rect key="frame" x="309" y="133" width="16" height="16"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="ltZ-Sw-w10"/>
-                            </imageView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Cw-l2-NWR">
-                                <rect key="frame" x="327" y="123" width="77" height="32"/>
+                                <rect key="frame" x="327" y="75" width="77" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Test" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iHb-7N-oZ3">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -117,11 +101,11 @@
                                 </connections>
                             </button>
                             <progressIndicator hidden="YES" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="Lzu-3u-ehX">
-                                <rect key="frame" x="309" y="133" width="16" height="16"/>
+                                <rect key="frame" x="309" y="84" width="16" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </progressIndicator>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UWp-BU-Jkm">
-                                <rect key="frame" x="18" y="105" width="382" height="17"/>
+                                <rect key="frame" x="18" y="62" width="382" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" id="x3I-eS-3aX">
                                     <font key="font" metaFont="system"/>
@@ -130,7 +114,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jM8-Qb-cP4">
-                                <rect key="frame" x="18" y="160" width="136" height="17"/>
+                                <rect key="frame" x="18" y="111" width="136" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Authentication portal:" id="Dpg-Ty-zJf">
                                     <font key="font" metaFont="system"/>
@@ -138,6 +122,11 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TYD-RZ-mRX">
+                                <rect key="frame" x="309" y="84" width="16" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="ltZ-Sw-w10"/>
+                            </imageView>
                         </subviews>
                     </view>
                     <connections>
@@ -150,7 +139,7 @@
                 </viewController>
                 <customObject id="9rn-nd-KzU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="501" y="69"/>
+            <point key="canvasLocation" x="501" y="119"/>
         </scene>
         <!--User-->
         <scene sceneID="3Yc-22-UjO">
@@ -291,8 +280,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="NSAdvanced" width="128" height="128"/>
-        <image name="NSInfo" width="128" height="128"/>
-        <image name="NSUser" width="128" height="128"/>
+        <image name="NSAdvanced" width="32" height="32"/>
+        <image name="NSInfo" width="32" height="32"/>
+        <image name="NSUser" width="32" height="32"/>
     </resources>
 </document>

@@ -2,7 +2,6 @@ import Cocoa
 import ServiceManagement
 import os.log
 
-let KEY_AUTO_START = "KMCAutoStart"
 let KEY_EMAIL = "KMCEmail"
 let KEY_USERNAME = "KMCUsername"
 let KEY_DOMAIN = "KMCDomain"
@@ -16,14 +15,8 @@ class DataManager : NSObject {
 
     override init() {
         super.init()
-        setRunAtLogin(getRunAtLogin())
-
         let defaults = [KEY_SHOW_NOTIFICATIONS : true, KEY_POLLING_RATE : 60] as [String : Any]
         UserDefaults.standard.register(defaults: defaults)
-
-        if !UserDefaults.standard.bool(forKey: "SUHasLaunchedBefore") {
-            setRunAtLogin(true)
-        }
     }
 
     func reset(){
@@ -106,19 +99,6 @@ class DataManager : NSObject {
         }
         UserDefaults.standard.set(domain, forKey: KEY_DOMAIN)
         return true
-    }
-
-    func getRunAtLogin() -> Bool{
-        return UserDefaults.standard.bool(forKey: KEY_AUTO_START)
-    }
-
-    func setRunAtLogin(_ runAtLogin : Bool) {
-        UserDefaults.standard.set(runAtLogin, forKey: KEY_AUTO_START)
-        if !SMLoginItemSetEnabled("\(Bundle.main.bundleIdentifier!)Launcher" as CFString, runAtLogin){
-            os_log("Failed to register application for auto-startup")
-        }else{
-            os_log("Successfully registered application for auto-startup")
-        }
     }
 
     func shouldShowNotifications() -> Bool{

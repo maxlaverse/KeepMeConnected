@@ -18,7 +18,6 @@ class KeychainService : NSObject {
             return nil
             
         }
-        os_log("Queried Keychain for '%s' with status %d",forKey, status)
         let d = result as? Data
         return String(data: d!, encoding: .utf8)!
     }

@@ -73,12 +73,14 @@ class WatchGuard: NSObject {
                 handler(WatchGuardLoginResponse.Error(error!.localizedDescription.dropSuffix(".")))
             } else {
                 if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.url == portalUrl{
+                    if httpResponse.url == portalUrl || httpResponse.url?.absoluteString.range(of:"success.shtml") != nil {
                         handler(WatchGuardLoginResponse.Success)
                     }else{
                         if let errcode = URLComponents(string: httpResponse.url!.absoluteString)?.queryItems?.filter({$0.name == "errcode"}).first?.value {
+                            os_log("Error on logon. Error (%@) '%@'",errcode,WatchGuard.getErrorCodeStr(errcode))
                             handler(WatchGuardLoginResponse.Failed(WatchGuard.getErrorCodeStr(errcode)))
                         }else{
+                            os_log("Error on logon. Wrong base '%@'",httpResponse.url!.absoluteString)
                             handler(WatchGuardLoginResponse.Error(String(format: "Missing errcode in redirection to '%@'",httpResponse.url!.absoluteString)))
                         }
                     }
@@ -121,6 +123,7 @@ class WatchGuard: NSObject {
                                 handler(WatchGuardLogoutResponse.Error(WatchGuard.getErrorCodeStr(errcode)))
                             }
                         }else{
+                            os_log("Error on logout. Missing errcode in '%@'",httpResponse.url!.absoluteString)
                             let dataString = String(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!)
                             handler(WatchGuardLogoutResponse.Error(String(format: "Missing errcode '%@': %@",httpResponse.url!.absoluteString, dataString)))
                         }

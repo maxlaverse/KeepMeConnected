@@ -59,37 +59,42 @@ class WatchGuard: NSObject {
         request.timeoutInterval = 3
         request.httpMethod = "POST"
         
-        // Body
-        request.httpBody = "action=fw_logon&fw_domain=\(userDomain)&fw_logon_type=logon&fw_username=\(userName)&fw_password=\(userPassword)&lang=en-US&submit=Login".data(using: String.Encoding.ascii, allowLossyConversion: false)
-        
-        // Headers
-        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.addValue("*/*", forHTTPHeaderField: "Accept")
-        request.addValue(WatchGuard.UserAgent, forHTTPHeaderField: "User-Agent")
-        
-        // Execute the request
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if error != nil {
-                handler(WatchGuardLoginResponse.Error(error!.localizedDescription.dropSuffix(".")))
-            } else {
-                if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.url == portalUrl || httpResponse.url?.absoluteString.range(of:"success.shtml") != nil {
-                        handler(WatchGuardLoginResponse.Success)
-                    }else{
-                        if let errcode = URLComponents(string: httpResponse.url!.absoluteString)?.queryItems?.filter({$0.name == "errcode"}).first?.value {
-                            os_log("Error on logon. Error (%@) '%@'",errcode,WatchGuard.getErrorCodeStr(errcode))
-                            handler(WatchGuardLoginResponse.Failed(WatchGuard.getErrorCodeStr(errcode)))
+        if let encodedUserDomain = userDomain.addingPercentEncoding(withAllowedCharacters:.alphanumerics),
+            let encodedUserName = userName.addingPercentEncoding(withAllowedCharacters:.alphanumerics),
+            let encodedUserPassword = userPassword.addingPercentEncoding(withAllowedCharacters:.alphanumerics) {
+
+            // Body
+            request.httpBody = "action=fw_logon&fw_domain=\(encodedUserDomain)&fw_logon_type=logon&fw_username=\(encodedUserName)&fw_password=\(encodedUserPassword)&lang=en-US&submit=Login".data(using: String.Encoding.ascii, allowLossyConversion: false)
+
+            // Headers
+            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.addValue("*/*", forHTTPHeaderField: "Accept")
+            request.addValue(WatchGuard.UserAgent, forHTTPHeaderField: "User-Agent")
+
+            // Execute the request
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if error != nil {
+                    handler(WatchGuardLoginResponse.Error(error!.localizedDescription.dropSuffix(".")))
+                } else {
+                    if let httpResponse = response as? HTTPURLResponse {
+                        if httpResponse.url == portalUrl || httpResponse.url?.absoluteString.range(of:"success.shtml") != nil {
+                            handler(WatchGuardLoginResponse.Success)
                         }else{
-                            os_log("Error on logon. Wrong base '%@'",httpResponse.url!.absoluteString)
-                            handler(WatchGuardLoginResponse.Error(String(format: "Missing errcode in redirection to '%@'",httpResponse.url!.absoluteString)))
+                            if let errcode = URLComponents(string: httpResponse.url!.absoluteString)?.queryItems?.filter({$0.name == "errcode"}).first?.value {
+                                os_log("Error on logon. Error (%@) '%@'",errcode,WatchGuard.getErrorCodeStr(errcode))
+                                handler(WatchGuardLoginResponse.Failed(WatchGuard.getErrorCodeStr(errcode)))
+                            }else{
+                                os_log("Error on logon. Wrong base '%@'",httpResponse.url!.absoluteString)
+                                handler(WatchGuardLoginResponse.Error(String(format: "Missing errcode in redirection to '%@'",httpResponse.url!.absoluteString)))
+                            }
                         }
+                    }else{
+                        handler(WatchGuardLoginResponse.Error("No HTTPURLResponse was returned"))
                     }
-                }else{
-                    handler(WatchGuardLoginResponse.Error("No HTTPURLResponse was returned"))
                 }
             }
+            task.resume()
         }
-        task.resume()
     }
     
     func logout(portalUrl: URL,handler: @escaping (_: WatchGuardLogoutResponse) -> Void){
